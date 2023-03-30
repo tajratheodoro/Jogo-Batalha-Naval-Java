@@ -1,0 +1,42 @@
+import java.util.Scanner;
+
+public class Jogo {
+    public static void main(String[] args) {
+        Tabuleiro tabuleiro = new Tabuleiro();
+        Scanner scanner = new Scanner(System.in);
+        int tiros = 40;  // Número máximo de ataques
+        int naviosDestruidos = 0;
+
+        while (tiros > 0) {
+            System.out.println("Tiros restantes: " + tiros);
+            System.out.print("Informe a coordenada X para ataque (0-19): ");
+            int x = scanner.nextInt();
+            System.out.print("Informe a coordenada Y para ataque (0-19): ");
+            int y = scanner.nextInt();
+
+            if (tabuleiro.atirar(x, y)) {
+                System.out.println("<<<< Navio atingido! >>>>"); // Um navio foi atingido
+                naviosDestruidos++;
+            } else {
+                System.out.println("<<<< Água! >>>>"); // Nenhum navio foi atingido
+            }
+
+            if (tabuleiro.vitoria(naviosDestruidos)) {
+                System.out.println("<<<< Você venceu! >>>>");
+                break;
+            }
+
+            tiros--;
+               }
+
+        if (tiros == 0 && !tabuleiro.vitoria(naviosDestruidos)) {
+            System.out.println("Você perdeu! Total de Navios destruídos: " + naviosDestruidos);
+        }
+
+        scanner.close();
+    }
+}
+
+// Jogo de batalha naval onde nós somos os alienígenas que estão atacando a Terra, e só nós podemos atacar com no máximo 40 tiros.
+// O tabuleiro tem um tamanho de 20x20. Só se pode vencer caso destrua 80% das tropas terrestres.
+// Atividade de desafio para a matéria "Estrutura de Dados".
